@@ -37,28 +37,32 @@ class GenusController extends Controller
      */
     public function listAction() {
         $em = $this->getDoctrine()->getManager();
-        $genuses = $em->getRepository('AppBundle:Genus')->findAll();
+        $genuses = $em->getRepository('AppBundle:Genus')->findAllPublishedOrderedBySize();
         return $this->render('genus/list.html.twig', compact('genuses'));
     }
     /**
-     * @Route("/genus/{genusName}")
+     * @Route("/genus/{genusName}", name="genus_show")
      */
     public function showAction($genusName)
     {
+        $genus = $this->getDoctrine()->getRepository('AppBundle:Genus')->findOneBy(['name' => $genusName]);
+        if(!$genus) {
+            throw $this->createNotFoundException('No genus found');
+        }
         $fact = "fact is quete *important* for us";
         $fact = $this->get('markdown.parser')->transform($fact);
-        $cahe = $this->get('doctrine_cache.providers.my_markdown_cache');
-        $key = md5($fact);
-        if ($cahe->contains($key)) {
-            $fact = $cahe->fetch($key);
-        } else {
-            sleep(1);
-            $fact = $this->get('markdown.parser')->transform($fact);
-            $cahe->save($key, $fact);
-        }
+//        $cahe = $this->get('doctrine_cache.providers.my_markdown_cache');
+//        $key = md5($fact);
+//        if ($cahe->contains($key)) {
+//            $fact = $cahe->fetch($key);
+//        } else {
+//            sleep(1);
+//            $fact = $this->get('markdown.parser')->transform($fact);
+//            $cahe->save($key, $fact);
+//        }
+        $this->get('logger')->info('Showing genus'. $genusName);
         return $this->render('genus/show.html.twig', [
-            'name' => $genusName,
-            'fact' => $fact
+            'genus' => $genus
         ]);
     }
 
