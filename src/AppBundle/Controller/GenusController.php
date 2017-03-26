@@ -24,12 +24,22 @@ class GenusController extends Controller
     {
         $genus = new Genus();
         $genus->setName('Octopus'.rand(1,100));
+        $genus->setSubFamily('Family'.rand(1,100));
+        $genus->setSpeciesCount('Speciaes'.rand(1,100));
         $em = $this->getDoctrine()->getManager();
         $em->persist($genus);
         $em->flush();
         return new Response('<html><body>Genus created</body></html>');
     }
 
+    /**
+     * @Route("/genus")
+     */
+    public function listAction() {
+        $em = $this->getDoctrine()->getManager();
+        $genuses = $em->getRepository('AppBundle:Genus')->findAll();
+        return $this->render('genus/list.html.twig', compact('genuses'));
+    }
     /**
      * @Route("/genus/{genusName}")
      */

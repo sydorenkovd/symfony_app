@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <table class="table table-responsive table-bordered">
+        <thead>
+        <tr>
+            <th>Genus</th>
+            <th>Specias</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for genus in genuses %}
+                <tr>
+                    <td>{{ genus.name }}</td>
+                    <td>{{ genus.speciesCount }}</td>
+                    <td>{{ genus.updateAt }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -120,5 +120,7 @@ class Genus
         $this->name = $name;
     }
     
-    
+    public function getUpdateAt() {
+        return date('Y-m-d H:i:s', rand(1490056209, 1490556209));
+    }
 }
