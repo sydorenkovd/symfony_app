@@ -43,7 +43,7 @@ class Genus
 
     /**
      * @return ArrayCollection
-     */git 
+     */ 
     public function getNotes()
     {
         return $this->notes;
