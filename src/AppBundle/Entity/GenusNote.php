@@ -10,7 +10,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Genus;
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\GenusRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GenusNoteRepository")
  * @ORM\Table(name="genus_notes")
  */
 class GenusNote
