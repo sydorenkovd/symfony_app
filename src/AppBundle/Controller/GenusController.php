@@ -70,22 +70,30 @@ class GenusController extends Controller
 //            $cahe->save($key, $fact);
 //        }
         $this->get('logger')->info('Showing genus'. $genusName);
+        
+        $recentNotes = $genus->getNotes()->filter(function (GenusNote $note){
+            return $note->getCreatedAt() > new \DateTime('-3 month');
+        });
         return $this->render('genus/show.html.twig', [
-            'genus' => $genus
+            'genus' => $genus,
+            'recentNotesCount' => count($recentNotes)
         ]);
     }
 
     /**
-     * @Route("/genus/{genusName}/notes", name="genus_notes")
+     * @Route("/genus/{name}/notes", name="genus_notes")
      * @Method("GET")
      */
-    public function getNotesAction()
+    public function getNotesAction(Genus $genus)
     {
-        $notes = [
-            ['id' => 1, 'username' => 'Sydorenkovd'],
-            ['id' => 2, 'username' => 'Sydorenkovd2'],
-            ['id' => 3, 'username' => 'Sydorenkovd3'],
-        ];
+        $notes = [];
+        foreach ($genus->getNotes() as $note) {
+            $notes[] = [
+                'id' => $note->getId(),
+                'username' => $note->getUsername(),
+                'note' => $note->getNote(),
+            ];
+        }
         $data = [
             'notes' => $notes
         ];
