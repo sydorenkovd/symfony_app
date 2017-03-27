@@ -8,7 +8,11 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
-
+use AppBundle\Entity\Genus;
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GenusRepository")
+ * @ORM\Table(name="genus_notes")
+ */
 class GenusNote
 {
     /**
@@ -20,7 +24,7 @@ class GenusNote
     /**
      * @ORM\Column(type="string")
      */
-    private $username;git 
+    private $username; 
     /**
      * @ORM\Column(type="string")
      */
@@ -29,7 +33,10 @@ class GenusNote
      * @ORM\Column(type="text")
      */
     private $note;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Genus")
+     */
+    private $genus;
     /**
      * @return mixed
      */
@@ -102,7 +109,23 @@ class GenusNote
         $this->createdAt = $createdAt;
     }
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
+
+    /**
+     * @return mixed
+     */
+    public function getGenus()
+    {
+        return $this->genus;
+    }
+
+    /**
+     * @param mixed $genus
+     */
+    public function setGenus($genus)
+    {
+        $this->genus = $genus;
+    }
 }
