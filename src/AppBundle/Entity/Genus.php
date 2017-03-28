@@ -117,7 +117,7 @@ class Genus
      */
     public function getFact()
     {
-        return $this->fact;
+        return "**test** " . $this->fact;
     }
 
     /**
