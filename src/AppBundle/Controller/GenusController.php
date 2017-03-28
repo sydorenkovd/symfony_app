@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genus;
 use AppBundle\Entity\GenusNote;
+use AppBundle\Service\MarkdownTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,8 +59,9 @@ class GenusController extends Controller
         if(!$genus) {
             throw $this->createNotFoundException('No genus found');
         }
-        $fact = "fact is quete *important* for us";
-        $fact = $this->get('markdown.parser')->transform($fact);
+
+        $transformer = new MarkdownTransformer($this->get('markdown.parser'));
+        $fact = $transformer->parse($genus->getFact());
 //        $cahe = $this->get('doctrine_cache.providers.my_markdown_cache');
 //        $key = md5($fact);
 //        if ($cahe->contains($key)) {
@@ -75,6 +77,7 @@ class GenusController extends Controller
             ->findAllRecentNotesForGenus($genus);
         return $this->render('genus/show.html.twig', [
             'genus' => $genus,
+            'fact' => $fact,
             'recentNotesCount' => count($recentNotes)
         ]);
     }
