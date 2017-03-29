@@ -49,6 +49,7 @@ class Genus
         return $this->notes;
     }
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SubFamily")
      * @ORM\Column(type="string")
      */
     private $subFamily;
