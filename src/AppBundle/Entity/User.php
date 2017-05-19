@@ -1,31 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydorenkovd
- * Date: 25.04.17
- * Time: 22:00
- */
 
 namespace AppBundle\Entity;
 
-
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * User
+ *
  * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User implements UserInterface
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @return mixed
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+
+    /**
+     * Get id
+     *
+     * @return int
      */
     public function getId()
     {
@@ -33,20 +41,35 @@ class User implements UserInterface
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     *
+     *
+     * @return User
+     */
+    public function setUsername($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    /**
      * @param mixed $id
      */
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $email;
-    public function getUsername()
-    {
-        return $this->email;
     }
 
     public function getRoles()
@@ -67,11 +90,5 @@ class User implements UserInterface
     {
     }
 
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
 }
+
