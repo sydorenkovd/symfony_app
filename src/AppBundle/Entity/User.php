@@ -51,9 +51,6 @@ class User implements UserInterface
         $this->password = null;
     }
 
-    /**
-     * @ORM\Column(type="string")
-     */
     private $plainPassword;
     /**
      * Get id

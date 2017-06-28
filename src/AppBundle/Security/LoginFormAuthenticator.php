@@ -11,6 +11,7 @@ namespace AppBundle\Security;
 
 use AppBundle\FormType\LoginForm;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,13 +36,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @var RouterInterface
      */
     private $router;
+    /**
+     * @var UserPasswordEncoder
+     */
+    private $passwordEncoder;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $entityManager, RouterInterface $router)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $entityManager, RouterInterface $router, UserPasswordEncoder $passwordEncoder)
     {
 
         $this->formFactory = $formFactory;
         $this->em = $entityManager;
         $this->router = $router;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function getCredentials(Request $request)
@@ -72,7 +78,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
        $password = $credentials['_password'];
 
-       if($password == 'ilike') {
+       if($this->passwordEncoder->isPasswordValid($user, $password)) {
            return true;
        }
        return false;
