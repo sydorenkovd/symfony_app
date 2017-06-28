@@ -43,7 +43,7 @@ class GenusController extends Controller
     }
 
     /**
-     * @Route("/genus")
+     * @Route("/genus", name="listGenus")
      */
     public function listAction() {
         $em = $this->getDoctrine()->getManager();
