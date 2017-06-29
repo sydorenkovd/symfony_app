@@ -15,7 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class MainController extends Controller
 {
     public function homepageAction() {
-        $roles = $this->getUser()->getRoles();
+        $roles = [];
+        if($this->getUser()) {
+            $roles = $this->getUser()->getRoles();
+        }
+
         return $this->render('main/homepage.html.twig', ['roles' => $roles]);
     }
 }

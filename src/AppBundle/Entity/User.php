@@ -82,7 +82,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setUsername($email)
+    public function setEmail($email)
     {
         $this->email = $email;
 
@@ -95,6 +95,10 @@ class User implements UserInterface
      * @return string
      */
     public function getUsername()
+    {
+        return $this->email;
+    }
+    public function getEmail()
     {
         return $this->email;
     }
