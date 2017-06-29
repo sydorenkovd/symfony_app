@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Main page test</h1>
+    <h1>Main page test {{ app.user.username }}</h1>
+    {% for role in roles %}
+    <p>{{ role }}</p>
+        {% endfor %}
 {% endblock %}
