@@ -25,12 +25,16 @@ class UserController extends Controller
         $form->handleRequest($request);
         if($form->isValid()) {
             $user = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Welcome ' . $user->getEmail());
         }
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
 
-        $this->addFlash('success', 'Welcome ' . $user->getEmail());
+
+
+
+
         return $this->render('user/register.html.twig', ['form' => $form->createView()]);
     }
 }
