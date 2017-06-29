@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class GenusController
  * @package AppBundle\Controller
- * @Security("is_granted('ROLE_USERS')")
+ * @Security("is_granted('ROLE_ADMIN')")
  */
 class GenusController extends Controller
 {
